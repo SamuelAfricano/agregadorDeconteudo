@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'css/bulma.css' %}">
+	<title>PyTech</title>
+</head>
+<body>
+	   <section class="hero is-small is-success mb-4" >
+      <div class="hero-body">
+        <h1 class="title is-2">
+          <a href="{% url 'homepage' %}">
+            PyTech
+          </a>
+        </h1>
+        <p class="subtitle is-5">Seu Feed De noticia em  Django</p>
+      </div>
+   </section>
+
+<div class="container">
+        {% for post in text %}
+        <div class="block" style="margin: 2em auto;max-width:90%;">
+        	<p class="title is-5">{{post.nome}} <small>{{post.titulo}}</small></p>
+        	<img src="{{post.imagem}}">
+        	{{post.Bio}}.
+        	<p class="mt-2 center nutton" ><a href="{{post.link }}">Ver tudo</a></p>
+        </div>
+        {% endfor %}
+
+        <div class="mt-4">
+        {% if is_paginated %}
+          {% if page_obj.has_previous %}
+             <a href="{{ request.path }}?page={{ page_obj.previous_page_number}}" class="w3-text-blue">  Anterior</a> 
+          {% endif %}
+            <span>
+                 pagina {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+            </span>
+          {% if page_obj.has_next %}
+            <a href="{{ request.path }}?page={{page_obj.next_page_number}}" class="w3-text-blue"> Próximo</a>
+          {% endif %}
+        {% endif %}	
+        </div>
+</div>
+</body>
+</html>
